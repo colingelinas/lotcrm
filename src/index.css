@@ -191,9 +191,9 @@ button, a, input, select, textarea {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle at center, rgba(229, 62, 62, 0.08) 0%, transparent 70%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle at center, rgba(229, 62, 62, 0.06) 0%, transparent 70%);
   z-index: -1;
   pointer-events: none;
 }
@@ -236,15 +236,12 @@ button, a, input, select, textarea {
   grid-template-columns: repeat(4, 1fr);
   gap: 0;
   margin: 16px 0;
-  background: var(--surface);
-  border-radius: var(--radius);
-  overflow: hidden;
 }
 
 .stat-tile {
   padding: 14px 4px;
   text-align: center;
-  border-right: 1px solid var(--border);
+  border-right: 1px solid rgba(99,110,123,0.18);
 }
 .stat-tile:last-child { border-right: none; }
 
