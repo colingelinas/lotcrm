@@ -101,7 +101,7 @@ button, a, input, select, textarea {
   justify-content: space-between;
   padding: 16px 18px 14px;
   background: var(--bg);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #21262d;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -215,7 +215,7 @@ button, a, input, select, textarea {
   display: block;
   width: 100%;
   padding: 16px;
-  background: var(--blue);
+  background: linear-gradient(to bottom, #5a9eff, #3a7edf);
   color: #fff;
   border: none;
   border-radius: var(--radius);
@@ -226,7 +226,7 @@ button, a, input, select, textarea {
   text-transform: uppercase;
   cursor: pointer;
 }
-.cta-btn:hover { background: var(--blue-hover); filter: brightness(1.1); }
+.cta-btn:hover { filter: brightness(1.08); }
 .cta-btn:active { transform: scale(0.98); }
 
 /* ── STATS ROW ── */
@@ -406,7 +406,8 @@ button, a, input, select, textarea {
   padding: 16px 0;
   cursor: pointer;
 }
-.lead-item:active { background: rgba(255,255,255,0.02); }
+.lead-item:hover  { background: rgba(28,33,40,0.6); }
+.lead-item:active { background: #1c2128; }
 
 .lead-item-bar {
   width: 3px;
@@ -828,7 +829,7 @@ button, a, input, select, textarea {
   max-width: 420px;
   height: 65px;
   background: var(--surface);
-  border-top: 1px solid var(--border);
+  border-top: 1px solid #21262d;
   display: flex;
   z-index: 50;
 }
@@ -904,8 +905,8 @@ button, a, input, select, textarea {
 }
 
 .modal {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: #161b22;
+  border: 1px solid #21262d;
   border-radius: 2px 2px 0 0;
   width: 100%;
   max-width: 420px;
@@ -2043,8 +2044,9 @@ button, a, input, select, textarea {
 
 .sheet-panel {
   width: 100%;
-  background: var(--surface);
+  background: #161b22;
   border-radius: 12px 12px 0 0;
+  border-top: 1px solid #21262d;
   padding: 12px 20px 40px;
   animation: sheetUp 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
