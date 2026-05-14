@@ -157,7 +157,7 @@ button, a, input, select, textarea {
   justify-content: center;
   flex-shrink: 0;
 }
-.btn-icon svg { width: 16px; height: 16px; }
+.btn-icon svg { width: 18px; height: 18px; }
 .btn-icon:hover { background: var(--accent); border-color: var(--accent); }
 
 /* ── HERO SECTION ── */
@@ -286,7 +286,7 @@ button, a, input, select, textarea {
 
 .section-header--minor {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.12em;
   color: var(--text-tertiary);
   border-bottom: none;
@@ -483,6 +483,29 @@ button, a, input, select, textarea {
   color: var(--text-muted);
   font-size: 13px;
 }
+
+/* ── FULL EMPTY STATE ── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64px 32px 40px;
+  text-align: center;
+  gap: 6px;
+}
+.empty-state-headline {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+.empty-state-sub {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin-bottom: 20px;
+}
 .empty-add-btn {
   background: none;
   border: 1px solid var(--border);
@@ -521,7 +544,7 @@ button, a, input, select, textarea {
 .followup-progress-bar-fill {
   height: 100%;
   background: var(--accent);
-  transition: width 0.4s ease;
+  transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   min-width: 0;
 }
 
@@ -826,7 +849,8 @@ button, a, input, select, textarea {
   position: relative;
 }
 .nav-item.active .nav-icon-wrap { background: none; }
-.nav-item svg { width: 20px; height: 20px; }
+.nav-item svg { width: 18px; height: 18px; transition: transform 0.2s ease; }
+.nav-item.active svg { transform: scale(1.1); }
 
 .nav-label {
   font-family: var(--font-display);
@@ -1219,7 +1243,7 @@ button, a, input, select, textarea {
   text-decoration: none;
 }
 .lead-contact-btn:hover { background: var(--surface2); }
-.lead-contact-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+.lead-contact-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
 
 /* View tabs */
 .view-tabs {
@@ -1774,7 +1798,7 @@ button, a, input, select, textarea {
   color: #fff;
   text-decoration: none;
 }
-.flow-contact-btn svg { width: 20px; height: 20px; stroke: #fff; }
+.flow-contact-btn svg { width: 18px; height: 18px; stroke: #fff; }
 .flow-contact-btn:hover { background: var(--blue-hover); }
 .flow-contact-btn:active { transform: scale(0.96); }
 
@@ -2195,6 +2219,7 @@ button, a, input, select, textarea {
   color: var(--accent);
   line-height: 1;
   margin-bottom: 5px;
+  text-shadow: 0 0 30px rgba(74, 158, 255, 0.3);
 }
 .commission-pace {
   font-size: 12px;

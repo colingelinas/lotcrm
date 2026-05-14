@@ -62,9 +62,9 @@ export default function FollowUpsView({ leads, openView, openNew }) {
         )}
 
         {isEmpty ? (
-          <div className="empty-minimal">
-            <span>No follow-ups scheduled</span>
-            <button className="empty-add-btn" onClick={() => openNew()} title="Add lead">+</button>
+          <div className="empty-state">
+            <div className="empty-state-headline">You're clear.</div>
+            <div className="empty-state-sub">Go find your next deal.</div>
           </div>
         ) : (
           sections.map(section => section.items.length > 0 && (
