@@ -2236,7 +2236,7 @@ button, a, input, select, textarea {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: #4a9eff;
 }
 
 /* ── HERO STREAK ── */

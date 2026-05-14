@@ -11,7 +11,7 @@ export default function FollowUpsView({ leads, openView, openNew }) {
     {
       id: 'overdue',
       label: 'Overdue',
-      accent: '#ef4444',
+      accent: '#e53e3e',
       items: active
         .filter(l => l.followUpDate && l.followUpDate < today)
         .sort((a, b) => a.followUpDate.localeCompare(b.followUpDate)),

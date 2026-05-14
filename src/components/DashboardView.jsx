@@ -81,14 +81,15 @@ export default function DashboardView({ leads, openView, openNew, goToFollowUps,
           <div className="hero-streak">🔥 {streak} day streak</div>
         )}
         <div className="hero-sub">
-          {allClear
-            ? 'No follow-ups due today'
-            : [
-                overdue.length > 0 && `${overdue.length} overdue`,
-                todayLeads.length > 0 && `${todayLeads.length} today`,
-                tomorrowLeads.length > 0 && `${tomorrowLeads.length} tomorrow`,
-              ].filter(Boolean).join(' · ')
-          }
+          {allClear ? 'No follow-ups due today' : (
+            <>
+              {overdue.length > 0 && <span style={{ color: '#e53e3e' }}>{overdue.length} overdue</span>}
+              {overdue.length > 0 && todayLeads.length > 0 && ' · '}
+              {todayLeads.length > 0 && `${todayLeads.length} today`}
+              {(overdue.length > 0 || todayLeads.length > 0) && tomorrowLeads.length > 0 && ' · '}
+              {tomorrowLeads.length > 0 && `${tomorrowLeads.length} tomorrow`}
+            </>
+          )}
         </div>
       </div>
 
