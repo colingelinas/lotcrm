@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { tomorrowStr } from '../data/demo.js'
 import { recordStreakActivity } from '../data/streak.js'
 import { BackIcon } from './icons.jsx'
@@ -37,13 +37,25 @@ export default function FollowUpFlowView({ flowLeads, onUpdateLead, onBack, onDo
   const [showCustom, setShowCustom] = useState(false)
   const [customDate, setCustomDate] = useState('')
   const [customTime, setCustomTime] = useState('09:00')
+  const [showCheck, setShowCheck]   = useState(false)
 
   const isDone   = idx >= flowLeads.length
   const lead     = isDone ? null : (currentLead ?? flowLeads[idx])
   const progress = Math.round((idx / flowLeads.length) * 100)
 
+  useEffect(() => {
+    if (isDone) {
+      const t = setTimeout(onDone, 1500)
+      return () => clearTimeout(t)
+    }
+  }, [isDone])
+
   function advance(didSet) {
     if (exiting) return
+    if (didSet) {
+      setShowCheck(true)
+      setTimeout(() => setShowCheck(false), 450)
+    }
     setExiting(true)
     if (didSet) setCompleted(c => c + 1)
     setTimeout(() => {
@@ -95,7 +107,6 @@ export default function FollowUpFlowView({ flowLeads, onUpdateLead, onBack, onDo
           <div className="flow-done-sub">
             {completed} of {flowLeads.length} follow-up{flowLeads.length !== 1 ? 's' : ''} updated
           </div>
-          <button className="cta-btn flow-done-cta" onClick={onDone}>Back to Dashboard</button>
         </div>
       </div>
     )
@@ -116,8 +127,15 @@ export default function FollowUpFlowView({ flowLeads, onUpdateLead, onBack, onDo
       </div>
       <div className="flow-counter">{idx + 1} of {flowLeads.length}</div>
 
-      {/* Lead card — key changes after exit so enter animation fires on new lead */}
+      {/* Lead card */}
       <div className={`flow-lead-card${exiting ? ' flow-exit' : ''}`} key={idx}>
+        {showCheck && (
+          <div className="flow-check-flash">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+        )}
         <div className="flow-lead-name">{lead.first} {lead.last}</div>
         {lead.vehicle && <div className="flow-lead-vehicle">{lead.vehicle}</div>}
         <div className="flow-lead-status-tag">{lead.status}</div>
@@ -154,7 +172,7 @@ export default function FollowUpFlowView({ flowLeads, onUpdateLead, onBack, onDo
         </div>
       </div>
 
-      {/* Outcome buttons — shown before follow-up options */}
+      {/* Outcome buttons */}
       {!outcome ? (
         <div className="flow-outcomes">
           <button className="flow-outcome-btn flow-outcome-primary" onClick={() => handleOutcome('spoke')}>SPOKE TO THEM</button>
@@ -163,7 +181,7 @@ export default function FollowUpFlowView({ flowLeads, onUpdateLead, onBack, onDo
           <button className="flow-outcome-skip" onClick={() => advance(false)}>SKIP</button>
         </div>
       ) : (
-        /* Follow-up options — only after outcome selected */
+        /* Follow-up options */
         <div className="flow-body">
           <div className="flow-section-label">Set Next Follow-Up</div>
 

@@ -27,6 +27,8 @@ export default function App() {
   const [fastAddOpen, setFastAddOpen] = useState(false)
   const [fastAddConfirm, setFastAddConfirm] = useState(null)
   const [fabVisible, setFabVisible] = useState(true)
+  const [fabPopping, setFabPopping] = useState(false)
+  const [navDir, setNavDir] = useState('tab')
   const lastScrollY = useRef(0)
 
   useEffect(() => {
@@ -48,26 +50,41 @@ export default function App() {
     window.scrollTo(0, 0)
   }, [activeTab])
 
+  function handleTabChange(tab) {
+    setNavDir('tab')
+    setActiveTab(tab)
+  }
+
+  function handleFabClick() {
+    setFabPopping(true)
+    setFastAddOpen(true)
+  }
+
   function openNew(prefillStatus = 'New') {
+    setNavDir('fwd')
     setNewLeadStatus(prefillStatus)
   }
 
   function openView(lead) {
+    setNavDir('fwd')
     setViewLeadId(lead.id)
   }
 
   function openEdit(lead) {
+    setNavDir('fwd')
     setViewLeadId(null)
     setEditLeadData(lead)
   }
 
   function createLead(lead) {
     setLeads(prev => [...prev, lead])
+    setNavDir('back')
     setNewLeadStatus(null)
   }
 
   function updateLead(lead) {
     setLeads(prev => prev.map(l => l.id === lead.id ? lead : l))
+    setNavDir('back')
     setEditLeadData(null)
     setViewLeadId(lead.id)
   }
@@ -88,11 +105,13 @@ export default function App() {
     }
     setLeads(prev => [...prev, lead])
     setFastAddOpen(false)
+    setFabPopping(false)
     setFastAddConfirm(lead)
   }
 
   function deleteLead(id) {
     setLeads(prev => prev.filter(l => l.id !== id))
+    setNavDir('back')
     setEditLeadData(null)
     setViewLeadId(null)
   }
@@ -110,11 +129,11 @@ export default function App() {
   // New lead screen
   if (newLeadStatus !== null) {
     return (
-      <div className="app-wrap">
+      <div className="app-wrap" data-nav={navDir}>
         <NewLeadView
           prefillStatus={newLeadStatus}
           onSave={createLead}
-          onBack={() => setNewLeadStatus(null)}
+          onBack={() => { setNavDir('back'); setNewLeadStatus(null) }}
         />
       </div>
     )
@@ -123,11 +142,11 @@ export default function App() {
   // Edit lead screen
   if (editLeadData !== null) {
     return (
-      <div className="app-wrap">
+      <div className="app-wrap" data-nav={navDir}>
         <EditLeadView
           lead={editLeadData}
           onSave={updateLead}
-          onBack={() => { setEditLeadData(null); setViewLeadId(editLeadData.id) }}
+          onBack={() => { setNavDir('back'); setEditLeadData(null); setViewLeadId(editLeadData.id) }}
           onDelete={deleteLead}
         />
       </div>
@@ -139,10 +158,10 @@ export default function App() {
     const lead = leads.find(l => l.id === viewLeadId)
     if (!lead) { setViewLeadId(null); return null }
     return (
-      <div className="app-wrap">
+      <div className="app-wrap" data-nav={navDir}>
         <ViewLeadView
           lead={lead}
-          onBack={() => setViewLeadId(null)}
+          onBack={() => { setNavDir('back'); setViewLeadId(null) }}
           onEdit={() => openEdit(lead)}
           onAddActivity={addActivity}
           onUpdateLead={updateLeadData}
@@ -154,12 +173,12 @@ export default function App() {
   // Follow-up flow
   if (followUpFlow !== null) {
     return (
-      <div className="app-wrap">
+      <div className="app-wrap" data-nav={navDir}>
         <FollowUpFlowView
           flowLeads={followUpFlow}
           onUpdateLead={updateLeadData}
-          onBack={() => setFollowUpFlow(null)}
-          onDone={() => setFollowUpFlow(null)}
+          onBack={() => { setNavDir('back'); setFollowUpFlow(null) }}
+          onDone={() => { setNavDir('back'); setFollowUpFlow(null) }}
         />
       </div>
     )
@@ -167,20 +186,29 @@ export default function App() {
 
   // Main tabbed app
   return (
-    <div className="app-wrap">
+    <div className="app-wrap" data-nav={navDir}>
       <div className="screen">
         {activeTab === 'dashboard' && (
-          <DashboardView {...viewProps} goToFollowUps={(leads) => setFollowUpFlow(leads)} goToLeads={() => setActiveTab('leads')} />
+          <DashboardView
+            {...viewProps}
+            goToFollowUps={(leads) => { setNavDir('fwd'); setFollowUpFlow(leads) }}
+            goToLeads={() => handleTabChange('leads')}
+          />
         )}
         {activeTab === 'leads' && <LeadsView {...viewProps} />}
         {activeTab === 'followups' && <FollowUpsView {...viewProps} />}
         {activeTab === 'metrics' && <MetricsView leads={leads} />}
         {activeTab === 'profile' && <ProfileView />}
       </div>
-      <BottomNav active={activeTab} onChange={setActiveTab} leads={leads} />
+      <BottomNav active={activeTab} onChange={handleTabChange} leads={leads} />
       {!['metrics', 'profile'].includes(activeTab) && (
         <div className="fab-container">
-          <button className={`fab${fabVisible ? '' : ' fab-hidden'}`} onClick={() => setFastAddOpen(true)} aria-label="Add lead">
+          <button
+            className={`fab${fabVisible ? '' : ' fab-hidden'}${fabPopping ? ' fab--popping' : ''}`}
+            onClick={handleFabClick}
+            onAnimationEnd={() => setFabPopping(false)}
+            aria-label="Add lead"
+          >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
@@ -189,7 +217,7 @@ export default function App() {
         </div>
       )}
       {fastAddOpen && (
-        <FastAddSheet onAdd={fastCreateLead} onClose={() => setFastAddOpen(false)} />
+        <FastAddSheet onAdd={fastCreateLead} onClose={() => { setFastAddOpen(false); setFabPopping(false) }} />
       )}
       {fastAddConfirm && (
         <FastAddConfirm
