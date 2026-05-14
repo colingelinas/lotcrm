@@ -56,7 +56,7 @@ export default function ProfileView() {
           </div>
         </div>
 
-        <button className="btn-danger-full">Sign Out</button>
+        <button className="btn-secondary-full">Sign Out</button>
       </div>
     </div>
   )

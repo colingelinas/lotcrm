@@ -644,6 +644,61 @@ button, a, input, select, textarea {
 }
 .btn-danger-full:hover { background: rgba(229, 62, 62, 0.08); }
 
+.btn-secondary-full {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin-top: 24px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-secondary-full:hover { color: var(--text); border-color: var(--text-muted); }
+
+/* ── METRICS HERO ── */
+.metrics-hero {
+  display: flex;
+  align-items: center;
+  padding: 20px 0 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
+}
+
+.metrics-hero-stat {
+  flex: 1;
+  text-align: center;
+}
+
+.metrics-hero-value {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -1px;
+  font-variant-numeric: tabular-nums;
+}
+
+.metrics-hero-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+.metrics-hero-divider {
+  width: 1px;
+  height: 48px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
 /* ── FAB ── */
 .fab-container {
   position: fixed;
@@ -2095,7 +2150,7 @@ button, a, input, select, textarea {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--danger);
+  color: var(--accent);
 }
 
 /* ── HERO STREAK ── */

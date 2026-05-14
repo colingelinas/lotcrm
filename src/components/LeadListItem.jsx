@@ -1,4 +1,6 @@
-import { STATUS_COLORS, TEMP_COLORS, todayStr } from '../data/demo.js'
+import { TEMP_COLORS, todayStr } from '../data/demo.js'
+
+const TEMP_BAR = { Hot: '#e6edf3', Warm: '#4a9eff', Cold: 'transparent' }
 
 export default function LeadListItem({ lead, onClick, showFollowUp = true }) {
   const today = todayStr()
@@ -19,7 +21,7 @@ export default function LeadListItem({ lead, onClick, showFollowUp = true }) {
     <div className="lead-item" onClick={onClick}>
       <div
         className="lead-item-bar"
-        style={{ background: STATUS_COLORS[lead.status] || '#444' }}
+        style={{ background: TEMP_BAR[lead.temperature] || 'transparent' }}
       />
       <div className="lead-item-body">
         <div className="lead-item-top">
